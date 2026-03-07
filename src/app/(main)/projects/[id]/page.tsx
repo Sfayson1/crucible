@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
+import ApplyButton from "@/components/projects/ApplyButton";
 
 export default async function ProjectDetailPage({
   params,
@@ -51,16 +52,24 @@ export default async function ProjectDetailPage({
 
       <h2 className="text-2xl font-semibold mb-4">Open Roles</h2>
       <div className="space-y-4 mb-6">
-        {project.roles.map((role: typeof project.roles[number]) => (
+        {project.roles.map((role: (typeof project.roles)[number]) => (
           <div
             key={role.id}
             className="border border-zinc-700 rounded-lg p-4 bg-zinc-900"
           >
             <h3 className="text-lg font-semibold mb-1">{role.title}</h3>
             <p className="text-zinc-400 text-sm mb-4">{role.description}</p>
-            <button className="bg-orange-600 hover:bg-orange-500 text-white text-sm px-4 py-2 rounded">
-              Apply
-            </button>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {role.skillsNeeded.map((skill: string) => (
+                <span
+                  key={skill}
+                  className="bg-zinc-700 text-zinc-200 px-2 py-1 rounded text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <ApplyButton projectId={project.id} roleId={role.id} />
           </div>
         ))}
       </div>

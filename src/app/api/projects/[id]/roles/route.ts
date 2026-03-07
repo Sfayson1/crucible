@@ -13,7 +13,7 @@ export async function POST(
     }
 
     const { id } = await params;
-    const { role, description } = await request.json();
+    const { role, description, skillsNeeded } = await request.json();
 
     const user = await prisma.user.findUnique({
       where: { clerkId: userId },
@@ -39,7 +39,7 @@ export async function POST(
       data: {
         title: role,
         description,
-        skillsNeeded: [],
+        skillsNeeded: skillsNeeded ? skillsNeeded.split(",").map((s: string) => s.trim()).filter(Boolean) : [],
         projectId: project.id,
       },
     });

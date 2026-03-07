@@ -6,6 +6,7 @@ export default function AddRolePage({ params }: { params: Promise<{ id: string }
   const { id } = use(params)
   const [role, setRole] = useState("");
   const [description, setDescription] = useState("");
+  const [skillsNeeded, setSkillsNeeded] = useState("");
 
   const router = useRouter();
 
@@ -15,7 +16,7 @@ export default function AddRolePage({ params }: { params: Promise<{ id: string }
       const res = await fetch(`/api/projects/${id}/roles`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role, description }),
+        body: JSON.stringify({ role, description, skillsNeeded }),
       });
       if (res.ok) {
         router.push(`/projects/${id}`);
@@ -38,6 +39,15 @@ export default function AddRolePage({ params }: { params: Promise<{ id: string }
             type="text"
             value={role}
             onChange={(e) => setRole(e.target.value)}
+            className="w-full border border-zinc-700 bg-zinc-900 text-white rounded px-3 py-2" />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="mb-1 text-sm text-zinc-300">Skills Needed (comma-separated)</label>
+          <input
+            type="text"
+            value={skillsNeeded}
+            onChange={(e) => setSkillsNeeded(e.target.value)}
             className="w-full border border-zinc-700 bg-zinc-900 text-white rounded px-3 py-2" />
         </div>
 
