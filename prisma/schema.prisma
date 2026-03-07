@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  name      String
+  email     String   @unique
+  cohort    String?
+  githubUrl String?
+  bio       String?
+  skills    String[]
+  avatarUrl String?
+  createdAt DateTime @default(now())
+
+  projects     Project[]
+  applications Application[]
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  techStack   String[]
+  githubUrl   String?
+  status      ProjectStatus @default(OPEN)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String
+
+  roles ProjectRole[]
+}
+
+model ProjectRole {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  skillsNeeded String[]
+  isFilled     Boolean  @default(false)
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  applications Application[]
+}
+
+model Application {
+  id        String            @id @default(cuid())
+  message   String
+  status    ApplicationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+
+  applicant   User   @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  applicantId String
+
+  role   ProjectRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  roleId String
+}
+
+enum ProjectStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
