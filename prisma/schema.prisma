@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -12,7 +11,6 @@ model User {
   clerkId   String   @unique
   name      String
   email     String   @unique
-  cohort    String?
   githubUrl String?
   bio       String?
   skills    String[]

@@ -11,14 +11,14 @@ export default function LandingPage() {
         {/* Hero */}
         <section className="flex flex-col items-center justify-center py-32 text-center">
           <div className="mb-4 inline-block rounded-full border border-orange-600/30 bg-orange-600/10 px-4 py-1 text-sm text-orange-400">
-            For bootcamp grads, by bootcamp grads
+            For developers who build things
           </div>
           <h1 className="mb-6 max-w-3xl text-5xl font-bold leading-tight tracking-tight md:text-6xl">
             Find your team.{" "}
             <span className="text-orange-500">Build something real.</span>
           </h1>
           <p className="mb-10 max-w-xl text-lg text-zinc-400">
-            Crucible connects bootcamp graduates who want to build projects
+            Crucible connects developers who want to build side projects
             together. Post what you&apos;re working on, find the collaborators
             you need, and ship it.
           </p>
@@ -29,7 +29,7 @@ export default function LandingPage() {
               </Button>
             </Link>
             <Link href="/projects">
-              <Button size="lg" variant="outline" className="border-zinc-700 text-zinc-300 hover:text-white px-8">
+              <Button size="lg" className="bg-white text-zinc-900 hover:bg-zinc-100 px-8">
                 Browse projects
               </Button>
             </Link>
