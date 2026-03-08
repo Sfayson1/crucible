@@ -34,6 +34,12 @@ export default function LandingPage() {
               </Button>
             </Link>
           </div>
+          <p className="mt-4 text-sm text-zinc-500">
+            Not sure yet?{" "}
+            <Link href="/demo" className="text-zinc-400 underline hover:text-white transition-colors">
+              Try the interactive demo
+            </Link>
+          </p>
         </section>
 
         {/* How it works */}
@@ -51,7 +57,7 @@ export default function LandingPage() {
                 step: "02",
                 title: "Find collaborators",
                 description:
-                  "Other grads browse open projects and apply to join based on their skills.",
+                  "Developers browse open projects and apply to join based on their skills.",
               },
               {
                 step: "03",
