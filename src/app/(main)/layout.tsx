@@ -8,7 +8,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
 
   if (userId) {
     const user = await prisma.user.findUnique({ where: { clerkId: userId } });
-    if (!user) {
+    if (!user || user.skills.length === 0) {
       redirect("/onboarding");
     }
   }
