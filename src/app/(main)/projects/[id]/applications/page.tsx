@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
+
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import ApplicationActions from "@/components/projects/ApplicationActions";
 
