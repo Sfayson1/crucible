@@ -85,12 +85,20 @@ export default async function ProjectDetailPage({
               <span className="ml-2 text-sm font-normal text-zinc-400">({project.roles.length})</span>
             </h2>
             {isOwner && (
-              <Link
-                href={`/projects/${project.id}/add-role`}
-                className="text-sm bg-orange-600 hover:bg-orange-500 transition-colors text-white px-4 py-1.5 rounded-lg font-medium"
-              >
-                + Add Role
-              </Link>
+              <div className="flex gap-2">
+                <Link
+                  href={`/projects/${project.id}/applications`}
+                  className="text-sm border border-zinc-700 hover:border-zinc-500 transition-colors text-zinc-300 hover:text-white px-4 py-1.5 rounded-lg font-medium"
+                >
+                  View Applications
+                </Link>
+                <Link
+                  href={`/projects/${project.id}/add-role`}
+                  className="text-sm bg-orange-600 hover:bg-orange-500 transition-colors text-white px-4 py-1.5 rounded-lg font-medium"
+                >
+                  + Add Role
+                </Link>
+              </div>
             )}
           </div>
 
