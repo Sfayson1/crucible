@@ -57,5 +57,12 @@ export async function POST(req: Request) {
     }
   }
 
+  if (event.type === "user.deleted") {
+    const { id } = event.data;
+    if (id) {
+      await prisma.user.deleteMany({ where: { clerkId: id } });
+    }
+  }
+
   return new Response("OK", { status: 200 });
 }
