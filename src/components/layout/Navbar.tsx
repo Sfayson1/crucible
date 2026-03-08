@@ -26,8 +26,14 @@ export default function Navbar() {
           {isSignedIn ? (
             <>
               <Link
+                href="/projects/new"
+                className="text-sm text-zinc-200 hover:text-white transition-colors"
+              >
+                Post a Project
+              </Link>
+              <Link
                 href="/dashboard"
-                className="text-sm text-zinc-400 hover:text-white transition-colors"
+                className="text-sm text-zinc-200 hover:text-white transition-colors"
               >
                 Dashboard
               </Link>
