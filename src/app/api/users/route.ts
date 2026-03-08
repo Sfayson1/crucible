@@ -12,23 +12,21 @@ export async function POST(req: Request) {
 
     const { name, bio, githubUrl, skills } = await req.json();
 
-    const createdUser = await prisma.user.upsert({
-      where: { clerkId: userId },
-      update: {
-        name,
-        bio,
-        githubUrl,
-        skills: skills ? skills.split(",").map((s: string) => s.trim()).filter(Boolean) : [],
-      },
-      create: {
-        clerkId: userId,
-        email: user?.emailAddresses[0]?.emailAddress ?? "",
-        name,
-        bio,
-        githubUrl,
-        skills: skills ? skills.split(",").map((s: string) => s.trim()).filter(Boolean) : [],
-      },
-    });
+    const email = user?.emailAddresses[0]?.emailAddress ?? "";
+    const skillsArray = skills ? skills.split(",").map((s: string) => s.trim()).filter(Boolean) : [];
+
+    const existingByEmail = await prisma.user.findUnique({ where: { email } });
+
+    const createdUser = existingByEmail
+      ? await prisma.user.update({
+          where: { email },
+          data: { clerkId: userId, name, bio, githubUrl, skills: skillsArray },
+        })
+      : await prisma.user.upsert({
+          where: { clerkId: userId },
+          update: { name, bio, githubUrl, skills: skillsArray },
+          create: { clerkId: userId, email, name, bio, githubUrl, skills: skillsArray },
+        });
 
     return NextResponse.json(createdUser, { status: 201 });
   } catch (error) {

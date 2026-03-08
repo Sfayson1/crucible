@@ -44,17 +44,17 @@ export async function POST(req: Request) {
 
     const name = [first_name, last_name].filter(Boolean).join(" ") || email.split("@")[0];
 
-    await prisma.user.upsert({
-      where: { clerkId: id },
-      update: {},
-      create: {
-        clerkId: id,
-        name,
-        email,
-        avatarUrl: image_url ?? null,
-        skills: [],
-      },
-    });
+    const existingByEmail = await prisma.user.findUnique({ where: { email } });
+    if (existingByEmail) {
+      await prisma.user.update({
+        where: { email },
+        data: { clerkId: id, avatarUrl: image_url ?? null },
+      });
+    } else {
+      await prisma.user.create({
+        data: { clerkId: id, name, email, avatarUrl: image_url ?? null, skills: [] },
+      });
+    }
   }
 
   return new Response("OK", { status: 200 });
