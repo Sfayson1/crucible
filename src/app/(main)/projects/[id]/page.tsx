@@ -127,7 +127,13 @@ export default async function ProjectDetailPage({
                       ))}
                     </div>
                   )}
-                  <ApplyButton projectId={project.id} roleId={role.id} />
+                  {role.isFilled ? (
+                    <span className="text-xs px-2.5 py-1 rounded-full font-medium border bg-zinc-800 text-zinc-400 border-zinc-700">
+                      Filled
+                    </span>
+                  ) : (
+                    <ApplyButton projectId={project.id} roleId={role.id} />
+                  )}
                 </div>
               ))}
             </div>

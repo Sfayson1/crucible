@@ -29,5 +29,12 @@ export async function updateApplicationStatus(
     data: { status },
   });
 
+  if (status === "ACCEPTED") {
+    await prisma.projectRole.update({
+      where: { id: application.roleId },
+      data: { isFilled: true },
+    });
+  }
+
   revalidatePath(`/projects/${projectId}/applications`);
 }
