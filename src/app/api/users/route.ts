@@ -12,15 +12,22 @@ export async function POST(req: Request) {
 
     const { name, bio, githubUrl, skills } = await req.json();
 
-    const createdUser = await prisma.user.create({
-      data: {
+    const createdUser = await prisma.user.upsert({
+      where: { clerkId: userId },
+      update: {
+        name,
+        bio,
+        githubUrl,
+        skills: skills ? skills.split(",").map((s: string) => s.trim()).filter(Boolean) : [],
+      },
+      create: {
         clerkId: userId,
         email: user?.emailAddresses[0]?.emailAddress ?? "",
         name,
         bio,
         githubUrl,
         skills: skills ? skills.split(",").map((s: string) => s.trim()).filter(Boolean) : [],
-      }
+      },
     });
 
     return NextResponse.json(createdUser, { status: 201 });
